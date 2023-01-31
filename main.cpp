@@ -78,7 +78,7 @@ bst_node *insert(bst_node *root, int data)
 	return (root);
 }
 
-// level Order bst traverse
+// level Order bst traverse (breadth first traversal)
 
 void	print(bst_node *root)
 {
@@ -86,7 +86,7 @@ void	print(bst_node *root)
 	std::queue<bst_node*> Q;
 	std::cout << "\n-------------------------\n" << "the BST content: " << std::endl;
 	Q.push(root);
-	// while there is at least one node
+	// while there is at least one node 
 	while (!Q.empty())
 	{
 		bst_node *tmp = Q.front();
@@ -98,6 +98,40 @@ void	print(bst_node *root)
 		Q.pop();//remove the element at front
 	}
 	
+}
+
+// traverse bst using preorder depth-first
+// <root><left><right> => visit order (root first then left, then right)
+
+void preorder_traversal(bst_node *root)
+{
+	if (root == NULL) return;
+	std::cout << root->data << std::endl;
+	preorder_traversal(root->left);
+	preorder_traversal(root->right);
+}
+
+// traverse bst using inorder depth-first
+// <left><root><right> => visit order (left first then root, then right)
+
+void inorder_traversal(bst_node *root)
+{
+	if (root == NULL) return;
+	inorder_traversal(root->left);
+	std::cout << root->data << std::endl;
+	inorder_traversal(root->right);
+}
+
+// traverse bst using postorder depth-first
+// <left><right><root> => visit order (left first then right, then root)
+/* notice that always left come before right */
+
+void postorder_traversal(bst_node *root)
+{
+	if (root == NULL) return;
+	postorder_traversal(root->left);
+	postorder_traversal(root->right);
+	std::cout << root->data << std::endl;
 }
 
 int main()
@@ -115,6 +149,10 @@ int main()
 	std::cout << "min of this bst is: " << min(root) << std::endl; 
 	std::cout << "max of this bst is: " << max(root) << std::endl;
 	std::cout << "the height of this bst is: " << find_height(root) << std::endl;
-	print(root);
+	std::cout << "\n------------------ BST Content -------------------\n";
+	//print(root);
+	//preorder_traversal(root);
+	//inorder_traversal(root);
+	postorder_traversal(root);
 	return 0;
 }
