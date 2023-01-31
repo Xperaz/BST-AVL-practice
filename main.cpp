@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 struct bst_node
 {
@@ -77,6 +78,28 @@ bst_node *insert(bst_node *root, int data)
 	return (root);
 }
 
+// level Order bst traverse
+
+void	print(bst_node *root)
+{
+	if (root == NULL) return;
+	std::queue<bst_node*> Q;
+	std::cout << "\n-------------------------\n" << "the BST content: " << std::endl;
+	Q.push(root);
+	// while there is at least one node
+	while (!Q.empty())
+	{
+		bst_node *tmp = Q.front();
+		std::cout << tmp->data << std::endl;
+		if (tmp->left != NULL)
+			Q.push(tmp->left);
+		if (tmp->right != NULL)
+			Q.push(tmp->right);
+		Q.pop();//remove the element at front
+	}
+	
+}
+
 int main()
 {
 	bst_node *root = NULL;
@@ -91,6 +114,7 @@ int main()
 	root = insert(root, 400);
 	std::cout << "min of this bst is: " << min(root) << std::endl; 
 	std::cout << "max of this bst is: " << max(root) << std::endl;
-	std::cout << "the height of this bst is: " << find_height(root) << std::endl; 
+	std::cout << "the height of this bst is: " << find_height(root) << std::endl;
+	print(root);
 	return 0;
 }
