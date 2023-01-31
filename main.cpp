@@ -27,6 +27,22 @@ bool	search(bst_node *root, int data)
 		return (search(root->right, data));
 }
 
+int max(int a, int b)
+{
+	return (a ? b : b);
+}
+
+int find_height(bst_node *root)
+{
+	int left_heigth = 0;
+	int right_heigth = 0;
+	if (root == NULL)
+		return (-1);
+	left_heigth = find_height(root->left);
+	right_heigth = find_height(root->right);
+	return (max(left_heigth, right_heigth) + 1);
+}
+
 int min(bst_node *root)
 {
 	bst_node *tmp = root;
@@ -49,6 +65,7 @@ int max(bst_node *root)
 	return tmp->data;
 }
 
+
 bst_node *insert(bst_node *root, int data)
 {
 	if (root == NULL)
@@ -70,7 +87,10 @@ int main()
 	root = insert(root, 100);
 	root = insert(root, 300);
 	root = insert(root, 5);
+	root = insert(root, 150);
+	root = insert(root, 400);
 	std::cout << "min of this bst is: " << min(root) << std::endl; 
-	std::cout << "max of this bst is: " << max(root) << std::endl; 
+	std::cout << "max of this bst is: " << max(root) << std::endl;
+	std::cout << "the height of this bst is: " << find_height(root) << std::endl; 
 	return 0;
 }
