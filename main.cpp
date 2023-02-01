@@ -147,52 +147,47 @@ bst_node	*min_value_node(bst_node *root)
 
 bst_node *delete_node(bst_node *root, int data)
 {
-	// base case
-    if (root == NULL)
-        return root;
- 
-    // If the key to be deleted is
+	// the base condition for recursive
+	if(root == NULL) return root; 
+
+	// If the key to be deleted is
     // smaller than the root's
     // key, then it lies in left subtree
-    if (data < root->data)
-        root->left = delete_node(root->left, data);
- 
-    // If the data to be deleted is
+	else if(data < root->data) root->left = delete_node(root->left,data);
+
+	// If the key to be deleted is
     // greater than the root's
-    // data, then it lies in right subtree
-    else if (data > root->data)
-        root->right = delete_node(root->right, data);
- 
-    // if data is same as root's data, then This is the node
+    // key, then it lies in right subtree
+	else if (data > root->data) root->right = delete_node(root->right,data);
+
+	// if key is same as root's key, then This is the node
     // to be deleted
-    else {
-        // node has no child
-        if (root->left == NULL && root->right == NULL)
-            return NULL;
- 
-        // node with only one child or no child
-        else if (root->left == NULL) {
-            bst_node* temp = root->right;
-            delete(root);
-            return temp;
-        }
-        else if (root->right == NULL) {
-            bst_node* temp = root->left;
-            delete(root);
-            return temp;
-        }
- 
-        // node with two children: Get the inorder successor
-        // (smallest in the right subtree)
-        bst_node* temp = min_value_node(root->right);
- 
-        // Copy the inorder successor's content to this node
-        root->data = temp->data;
- 
-        // Delete the inorder successor
-        root->right = delete_node(root->right, temp->data);
-    }
-    return root;
+
+	else {
+		// Case 1:  No child
+		if(root->left == NULL && root->right == NULL) { 
+			delete root;
+			root = NULL;
+		}
+		//Case 2: One child 
+		else if(root->left == NULL) {
+			bst_node *temp = root;
+			root = root->right;
+			delete temp;
+		}
+		else if(root->right == NULL) {
+			bst_node *temp = root;
+			root = root->left;
+			delete temp;
+		}
+		// case 3: 2 children
+		else { 
+			bst_node *temp = min_value_node(root->right);
+			root->data = temp->data;
+			root->right = delete_node(root->right,temp->data);
+		}
+	}
+	return root;
 }
 
 int main()
@@ -216,7 +211,7 @@ int main()
 	root = delete_node(root, 15);
 	root = delete_node(root, 20);
 	root = delete_node(root, 100);
-	//root = delete_node(root, 150);
+	root = delete_node(root, 150);
 	root = delete_node(root, 300);
 	root = delete_node(root, 400);
 	std::cout << "\n------------------ BST Content After deletion -------------------\n";
