@@ -51,7 +51,7 @@ int min(bst_node *root)
 		return (0);
 	while (tmp->left != NULL)
 		tmp = tmp->left;
-	return tmp->data;
+	return (tmp->data);
 }
 
 int max(bst_node *root)
